@@ -25,7 +25,6 @@ io.on('connection', (socket) => {
         console.log('user disconnected');
     });
 
-    // You can add more event handlers here as needed
 });
 
  let rooms = {};
@@ -108,12 +107,6 @@ io.on('connection', (socket) => {
     });
 
 
-    // socket.on('gameStart', (data) => {
-    //     const roomCode = data.roomCode;
-        
-    //     console.log('game Started!:', roomCode);
-    //     io.to(roomCode).emit('gameStarted', roomCode);
-    // });
     socket.on('gameStart', (data) => {
         const roomCode = data.roomCode;
         if (rooms[roomCode]) {
@@ -159,7 +152,7 @@ io.on('connection', (socket) => {
 });
 
 // Start the Express server
-const PORT = 3000;
+const PORT = process.env.PORT || 3000;
 http.listen(PORT, () => {
     console.log(`Server is running on port ${PORT}`);
 });
@@ -167,69 +160,3 @@ http.listen(PORT, () => {
 function generateRoomCode() {
     return Math.floor(100000 + Math.random() * 900000).toString();
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-// const express = require('express');
-// const http = require('http');
-// const socketIo = require('socket.io');
-
-// const app = express();
-// const server = http.createServer(app);
-// const io = require('socket.io')(http, {
-//     cors: {
-//         origin: "*",
-//         methods: ["GET", "POST"]
-//     }
-// });
-
-// const PORT = 3000;
-
-// let rooms = {};
-
-// io.on('connection', (socket) => {
-//     console.log('User connected:', socket.id);
-
-//     socket.on('createRoom', () => {
-//         let roomCode = generateRoomCode(); // 6자리 방 코드 생성 함수
-//         rooms[roomCode] = { host: socket.id, players: [socket.id] };
-//         socket.join(roomCode);
-//         socket.emit('roomCreated', { roomCode, playerId: 0 });
-//     });
-
-//     socket.on('joinRoom', (roomCode) => {
-//         if (rooms[roomCode]) {
-//             rooms[roomCode].players.push(socket.id);
-//             let playerId = rooms[roomCode].players.length - 1;
-//             socket.join(roomCode);
-//             socket.emit('roomJoined', { roomCode, playerId });
-//         } else {
-//             socket.emit('error', { message: 'Room not found!' });
-//         }
-//     });
-
-//     // 주사위 결과를 모든 플레이어에게 전송
-//     socket.on('diceRolled', (data) => {
-//         io.to(data.roomCode).emit('diceResult', data.diceResult);
-//     });
-
-//     // ... 다른 게임 로직 및 이벤트 ...
-// });
-
-// function generateRoomCode() {
-//     return Math.floor(100000 + Math.random() * 900000).toString();
-// }
-
-// app.listen(PORT, () => {
-//     console.log(`Server is running on port ${PORT}`);
-// });
