@@ -17,15 +17,7 @@ app.get('/', (req, res) => {
     res.send('<h1>Socket.io Server is running</h1>');
 });
 
-// Socket.io connection handler
-io.on('connection', (socket) => {
-    console.log('a user connected');
 
-    socket.on('disconnect', () => {
-        console.log('user disconnected');
-    });
-
-});
 
  let rooms = {};
 
@@ -145,6 +137,10 @@ io.on('connection', (socket) => {
         //하지만 이미 들어와있던 사람이 나갔다가 들어오면 playerID가 꼬임
         //playerID를 재조정하고 클라이언트에 업데이트 해주는 코드를 추가해줘야함
         
+    });
+
+    socket.on('disconnect', () => {
+        console.log('user disconnected');
     });
       
 
