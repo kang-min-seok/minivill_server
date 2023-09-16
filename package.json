@@ -2,7 +2,7 @@
   "dependencies": {
     "express": "^4.18.2",
     "moment": "^2.29.4",
-    "socket.io": "^4.7.2"
+    "socket.io": "^4.4.1"
   },
   "name": "minivill_server",
   "version": "1.0.0",
