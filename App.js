@@ -114,7 +114,7 @@ io.on('connection', (socket) => {
             };
     
             console.log('game Started!:', roomCode);
-            io.to(roomCode).emit('gameStarted', payload);
+            socket.to(roomCode).emit('gameStarted', payload);
         } else {
             console.log('Room not found:', roomCode);
         }
