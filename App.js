@@ -32,6 +32,8 @@ io.on('connection', (socket) => {
         socket.join(roomCode);
         socket.emit('roomCreated', { roomCode, playerId: 0, socketID: socket.id, playerNames: rooms[roomCode].playerName  });
         console.log('room Created!:', roomCode);
+
+        console.log('All existing room codes:', Object.keys(rooms).join(', '));
     });
 
     socket.on('joinRoom', (data) => {
