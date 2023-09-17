@@ -142,6 +142,16 @@ io.on('connection', (socket) => {
     socket.on('disconnect', () => {
         console.log('user disconnected');
     });
+
+    socket.on('gameWon', (data) => {
+        const roomCode = data.roomCode;
+        if (rooms[roomCode]) {
+            delete rooms[roomCode];
+            console.log(`Room ${roomCode} has been deleted due to game completion.`);
+        } else {
+            console.log('Room not found:', roomCode);
+        }
+    });
       
 
 
@@ -154,5 +164,9 @@ http.listen(PORT, () => {
 });
 
 function generateRoomCode() {
-    return Math.floor(100000 + Math.random() * 900000).toString();
+    let roomCode;
+    do {
+        roomCode = Math.floor(100000 + Math.random() * 900000).toString();
+    } while (rooms[roomCode]); // 방코드가 이미 존재하면 다시 생성
+    return roomCode;
 }
